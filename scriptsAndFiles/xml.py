@@ -49,11 +49,10 @@ class XML:
 		self.__content = content
 	content = property(getContent, setContent)
 
-
-#Tests
-xml = XML("tagName")
+#Test
+xml = XML("root")
 xml.setAttributes('k1', 'va1')
 print(xml.attributes)
 xml.setAttributes('k2', 'va2')
 print(xml.attributes)
-print(xml.__str__())
+print(xml.__str__)
