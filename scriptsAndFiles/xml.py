@@ -3,13 +3,15 @@ class XML:
 	def __init__(self, tagName, parent = 'noParent', attributes = 'noAttributes', children = 'noChildren', content = 'noContent'):
 		self.__parent = parent 			#Objeto de la clase string.
 		self.__tagName = tagName 		#Objeto de la clase string.
-		self.__properties = attributes 	#Objeto de la clase dict.
+		self.__attributes = attributes 	#Objeto de la clase dict.
 		self.__children = children 		#Lista de objetos de la clase XML.
 		self.__content = content 		#Objeto de la clase string.
 
 	def __str__(self):
-		return 'parent: {0}, tagName: {1}, attributes: {2}, children: {3}, content: {4}'.format(self.__parent, self.__tagName, self.__properties, self.__children, self.__content)
-
+		if(self.__parent == 'noParent'):
+			return 'parent: {0}, tagName: {1}, attributes: {2}, children: {3}, content: {4}'.format(self.__parent, self.__tagName, self.__attributes, self.__children, self.__content)
+		else:
+			return 'parent: {0}, tagName: {1}, attributes: {2}, children: {3}, content: {4}'.format(self.__parent.getTagName(), self.__tagName, self.__attributes, self.__children, self.__content)
 	#parent
 	def getParent(self):
 		return self.__parent
@@ -24,12 +26,12 @@ class XML:
 
 	#attributes
 	def getAttributes(self):
-		return self.__properties
+		return self.__attributes
 	def setAttributes(self, key, value):
-		if self.__properties =='noAttributes':
-			self.__properties = {key:value}
+		if self.__attributes =='noAttributes':
+			self.__attributes = {key:value}
 		else:
-			self.__properties[key] = value
+			self.__attributes[key] = value
 	attributes = property(getAttributes, setAttributes)
 
 	#children
@@ -49,10 +51,11 @@ class XML:
 		self.__content = content
 	content = property(getContent, setContent)
 
-#Test
-xml = XML("root")
+
+#Tests
+'''xml = XML("tagName")
 xml.setAttributes('k1', 'va1')
 print(xml.attributes)
 xml.setAttributes('k2', 'va2')
 print(xml.attributes)
-print(xml.__str__)
+print(xml.__str__())'''
