@@ -14,7 +14,7 @@ class XML:
 			return 'parent: {0}, tagName: {1}, attributes: {2}, children: {3}, content: {4}'.format(self.__parent.getTagName(), self.__tagName, self.__attributes, self.__children, self.__content)
 	#parent
 	def getParent(self):
-		return self.__parent
+		return self.__parent #Retorna una referencia al xml Padre
 	def setParent(self, parent):
 		self.__parent = parent
 	parent = property(getParent, setParent)
@@ -27,21 +27,25 @@ class XML:
 	#attributes
 	def getAttributes(self):
 		return self.__attributes
-	def setAttributes(self, key, value):
-		if self.__attributes =='noAttributes':
-			self.__attributes = {key:value}
+	def setAttributes(self, attributes):
+		self.__attributes = attributes
+	def addAttribute(self, key, value):
+		if self.__attributes =='noAttributes':#Si no se ha creado el diccionario
+			self.__attributes = {key:value} #Se crea un diccionario
 		else:
-			self.__attributes[key] = value
-	attributes = property(getAttributes, setAttributes)
+			self.__attributes[key] = value#Se agrega un par key/value al diccionario
+	attributes = property(getAttributes, setAttributes) 
 
 	#children
 	def getChildren(self):
 		return self.__children
-	def setChildren(self, xmlChild):
+	def setChildren(self, children):
+		self.__children = children
+	def addChild(self, child):
 		if self.__children == 'noChildren':
-			self.__children =[xmlChild,]
+			self.__children =[child,]#Se crea una lista de referencias a objetos xml que contiene a los hijos
 		else:
-			self.__children.append(xmlChild)
+			self.__children.append(child)#Se añade una nueva a referencia para un nuevo hijo
 	children = property(getChildren, setChildren)
 
 	#content
@@ -49,13 +53,9 @@ class XML:
 		return self.__content
 	def setContent(self, content):
 		self.__content = content
+	def addContent(self, content):
+		if self.__content == 'noContent':
+			self.__content = content
+		else:
+			self.content = self.__content + content
 	content = property(getContent, setContent)
-
-
-#Tests
-'''xml = XML("tagName")
-xml.setAttributes('k1', 'va1')
-print(xml.attributes)
-xml.setAttributes('k2', 'va2')
-print(xml.attributes)
-print(xml.__str__())'''
