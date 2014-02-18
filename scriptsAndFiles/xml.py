@@ -30,10 +30,10 @@ class XML:
 	def setAttributes(self, attributes):
 		self.__attributes = attributes
 	def addAttribute(self, key, value):
-		if self.__attributes =='noAttributes':#Si no se ha creado el diccionario
+		if self.__attributes =='noAttributes': #Si no se ha creado el diccionario
 			self.__attributes = {key:value} #Se crea un diccionario
 		else:
-			self.__attributes[key] = value#Se agrega un par key/value al diccionario
+			self.__attributes[key] = value #Se agrega un par key/value al diccionario
 	attributes = property(getAttributes, setAttributes) 
 
 	#children
@@ -43,9 +43,9 @@ class XML:
 		self.__children = children
 	def addChild(self, child):
 		if self.__children == 'noChildren':
-			self.__children =[child,]#Se crea una lista de referencias a objetos xml que contiene a los hijos
+			self.__children =[child,] #Se crea una lista de referencias a objetos xml que contiene a los hijos
 		else:
-			self.__children.append(child)#Se añade una nueva a referencia para un nuevo hijo
+			self.__children.append(child) #Se añade una nueva a referencia para un nuevo hijo
 	children = property(getChildren, setChildren)
 
 	#content

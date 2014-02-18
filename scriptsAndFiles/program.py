@@ -32,7 +32,7 @@ def loadXML(file):
 				init = 1
 			else:	#Si no es la primera vez que se crea un objeto xml
 				child = xml.XML(parent = currentXML, tagName = pair[0], attributes = pair[1])	#Crea un nuevo hijo xml
-				currentXML.addChild(child)#Se agrega un nuevo xml al xml actual
+				currentXML.addChild(child) #Se agrega un nuevo xml al xml actual
 				currentXML = child 	#El xml hijo se convierte en el xml actual
 			openTags+=1
 		#Si no es ninguno de los casos anteriores, se trata del contenido del xml
@@ -40,23 +40,42 @@ def loadXML(file):
 			currentXML.addContent(line)	#Se agrega contenido al xml
 	return currentXML
 
-def getDBID(xmlID, root):
-	for device in root.getChildren():
+def getDBID(deviceID, devices):
+	for device in devices.getChildren():
 		attribs = device.getAttributes()
-		if attribs['id'] == xmlID:
+		if attribs['id'] == deviceID:
 			return device
 			break
-	return 'not found'
+	return None
 
+def getCapabilityValue(capabilityName, devices, deviceID = None, device = None):
+	if(deviceID != None):
+		device = getDBID(deviceID, devices)
+	groups = device.getChildren()
+	if(groups!= 'noChildren'):
+		for group in groups:
+			for capability in group.getChildren():
+				attribs=capability.getAttributes()
+				if attribs['name'] == capabilityName:
+					return attribs['value']
+	fall_back = device.getAttributes()['fall_back']
+	if fall_back!='root':
+		return getCapabilityValue(capabilityName, devices, deviceID = fall_back)
+	return None
 
 f = open('wurfl-2.3m2.xml')	#Si no se especifica el modo, el modo 'r'ead (lectura) se establece por defecto 
-root = loadXML(f)
+devices = loadXML(f)
 f.close()	#Se cierra el archivo
 
 #Tests
 #Imprime el nodo raíz (devices)
-print(root)
+#print(devices)
+
 #Imprime el dispositivo con atributo id="sharp_tqgx12_ver1"
-print(getDBID('sharp_tqgx12_ver1', root))
-#Imprime 'not found' debido a que no existe dispositivo con atributo id="test1"
-print(getDBID('test1', root))
+#print(getDBID('sharp_tqgx12_ver1', devices))
+
+#Imprime 'None' debido a que no existe dispositivo con atributo id="test1"
+#print(getDBID('test1', devices))
+
+#Imprime el valor de la capacidad mobile_browser del dispositivo con id="browser_opera_mobi_9_7"
+print(getCapabilityValue('mobile_browser', devices, deviceID ='browser_opera_mobi_9_7'))
