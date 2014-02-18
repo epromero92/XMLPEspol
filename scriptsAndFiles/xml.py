@@ -30,7 +30,7 @@ class XML:
 	def setAttributes(self, attributes):
 		self.__attributes = attributes
 	def addAttribute(self, key, value):
-		if self.__attributes =='noAttributes': #Si no se ha creado el diccionario
+		if self.__attributes =='noAttributes':#Si no se ha creado el diccionario
 			self.__attributes = {key:value} #Se crea un diccionario
 		else:
 			self.__attributes[key] = value #Se agrega un par key/value al diccionario

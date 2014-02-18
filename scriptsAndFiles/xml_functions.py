@@ -7,7 +7,7 @@ def loadXML(file):
 	currentXML = None
 	child = 0
 	parent = 0
-
+	iteration = 0
 	while True:
 		line = file.readline()
 		if len(line) == 0:			#Longitud 0 significa EOF
@@ -63,19 +63,11 @@ def getCapabilityValue(capabilityName, devices, deviceID = None, device = None):
 		return getCapabilityValue(capabilityName, devices, deviceID = fall_back)
 	return None
 
-f = open('wurfl-2.3m2.xml')	#Si no se especifica el modo, el modo 'r'ead (lectura) se establece por defecto 
-devices = loadXML(f)
-f.close()	#Se cierra el archivo
-
-#Tests
-#Imprime el nodo raíz (devices)
-#print(devices)
-
-#Imprime el dispositivo con atributo id="sharp_tqgx12_ver1"
-#print(getDBID('sharp_tqgx12_ver1', devices))
-
-#Imprime 'None' debido a que no existe dispositivo con atributo id="test1"
-#print(getDBID('test1', devices))
-
-#Imprime el valor de la capacidad mobile_browser del dispositivo con id="browser_opera_mobi_9_7"
-print(getCapabilityValue('mobile_browser', devices, deviceID ='browser_opera_mobi_9_7'))
+def getDevicesWithCapVal(capabilityName, devices, value = None):
+	selected = []
+	capValue = None
+	for device in devices.getChildren():
+		capValue = getCapabilityValue(capabilityName,devices, device = device)
+		if (capValue!= None and capValue == value):
+			selected.append(device)
+	return selected

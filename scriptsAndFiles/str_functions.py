@@ -7,8 +7,8 @@ def getBefore(str, chars):
 	name = ''
 	for char in str:			#Por cada substring de longitud 1 en str
 		if(char in chars):		#Si el substring se encuentra en la cadena de caracteres límite
-			break				#Terminar el lazo for
-		else:					#Caso contrario
+			break				#terminar el lazo for
+		else:					#Taso contrario
 			name = name + char 	#Agregar el substring al objeto name
 	rest = str[len(name):]		#El objeto rest contiene el substring de str que no contiene a name
 	return(name, rest)
@@ -42,13 +42,13 @@ def processLine(str, kindOfTag):
 		pair = getBefore(rest,'=')			#Recupera la clave y el resto de la cadena
 		key = pair[0]; key = key.strip()	#Elimina posibles espacios antes y despues de la clave
 		rest = pair[1].strip(spaces + '=')	#Elimina posibles espacios e '=' al inicio y final de la cadena
-		pair = getBetween(rest,'"')			#Recupera el valor y el resto de la cadena
+		pair = getBetween(rest,'"')		#Recupera el valor y el resto de la cadena
 		value = pair[0];					#Se le envía una referencia del primer elemento de la dupla a value
 		rest = pair[1].strip(spaces)		#Elimina posibles espacios al inicio y final de la cadena
 		attribs[key] = value 				#Agrega un nuevo atributo a la lista de atributos
 	return (name, attribs)
 
-#Tests
+#Test
 '''
 print(processLine('<tagName>',''))
 print(processLine('<tagName k1="va1" k2="va2" k3="">',''))
