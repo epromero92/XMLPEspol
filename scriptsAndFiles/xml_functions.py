@@ -45,7 +45,6 @@ def getDBID(deviceID, devices):
 		attribs = device.getAttributes()
 		if attribs['id'] == deviceID:
 			return device
-			break
 	return None
 
 def getCapabilityValue(capabilityName, devices, deviceID = None, device = None):
@@ -71,3 +70,21 @@ def getDevicesWithCapVal(capabilityName, devices, value = None):
 		if (capValue!= None and capValue == value):
 			selected.append(device)
 	return selected
+
+def devicesReleasedOn(devices, value = None):
+	selected = []
+	capValue = None
+	for device in devices.getChildren():
+		capValue = getCapabilityValue('release_date', devices, device = device)
+		if (capValue!= None and capValue[0:4] == value):
+			selected.append((device, capValue))
+	return selected
+
+def getForefathers(deviceID, devices, hierarchy):
+	device = getDBID(deviceID, devices)
+	hierarchy.append(device)
+	fall_back = device.getAttributes()['fall_back']
+	if fall_back!='root':
+		return getForefathers(fall_back, devices, hierarchy)
+	else:
+		return hierarchy

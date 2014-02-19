@@ -19,6 +19,23 @@ capabilityValue = getCapabilityValue(capabilityName, devices, deviceID = deviceI
 print(deviceID, capabilityName, '+', capabilityValue)'''
 
 #Obtiene los dispositivos que poseen una pantalla de 16777216 colores.
+'''
 selected = getDevicesWithCapVal('colors', devices, value = '16777216')
 for device in selected:
 	print('device:', device.getAttributes()['id'], '--- fallback:', device.getAttributes()['fall_back'])
+'''
+
+#Obtiene los dispositivos cuyo año de lanzamiento fue 2000.
+'''selected = devicesReleasedOn(devices, value = '2000')
+print('Cantidad de dispositivos liberados en el 2000:', len(selected))
+for pair in selected:
+	print('device:', pair[0].getAttributes()['id'],'--- date:', pair[1], '--- fallback:', pair[0].getAttributes()['fall_back'])
+'''
+#Obtiene una lista con los antepasados de un dispositivo(incluyendo dicho dispositivo).
+'''hierarchy = getForefathers('sanyo_scp3200_ver1', devices, [])
+i = 1
+for device in hierarchy:
+	print(i,'-',device.getAttributes()['id'])
+	i+=1
+'''
+#pause = input('Enter to finish...')
